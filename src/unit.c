@@ -512,7 +512,6 @@ int procSetUnit(unitPtr uPtr, char *sendBuf, short *sendLen, char bitpos, char *
 
     bzero(errPtr, sizeof(error));
     // Some logging
-    int n = 0;
     char *ptr;
     char dumBuf[10];
     bzero(dumBuf, sizeof(dumBuf));
@@ -648,9 +647,6 @@ int procSetUnit(unitPtr uPtr, char *sendBuf, short *sendLen, char bitpos, char *
             unsigned char byte = *ptr++ & 255;
             snprintf(string, sizeof(string), "%02X ", byte);
             strcat(buffer, string);
-            if (n >= MAXBUF - 3) {
-                // FN: Where is 'n' initialized?!
-                break;
             }
         }
 
