@@ -233,7 +233,7 @@ int setSysTime(char *input, char *sendBuf, short bufsize)
         systime[3] = systime[2];
         systime[2] = ' ';
         logIT(LOG_INFO, "current system time %s", systime);
-        return string2chr(systime, sendBuf, bufsize);
+        return string2chr(systime, sendBuf, 8);
     } else {
         logIT1(LOG_ERR, "Setting an explicit time is not supported yet");
         return 0;
@@ -512,7 +512,6 @@ int procSetUnit(unitPtr uPtr, char *sendBuf, short *sendLen, char bitpos, char *
 
     bzero(errPtr, sizeof(error));
     // Some logging
-    int n = 0;
     char *ptr;
     char dumBuf[10];
     bzero(dumBuf, sizeof(dumBuf));
@@ -648,10 +647,6 @@ int procSetUnit(unitPtr uPtr, char *sendBuf, short *sendLen, char bitpos, char *
             unsigned char byte = *ptr++ & 255;
             snprintf(string, sizeof(string), "%02X ", byte);
             strcat(buffer, string);
-            if (n >= MAXBUF - 3) {
-                // FN: Where is 'n' initialized?!
-                break;
-            }
         }
 
         logIT(LOG_INFO, "Type: %s (bytes: %s)  ", uPtr->type, buffer);
